@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 var blogSchema = new Schema({
   title:  String,
   topic : String,
+  post:   String,
   author: String,
-  body:   String,
   comments: [{ body: String,
                date: Date
              }],

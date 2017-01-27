@@ -3,4 +3,8 @@ extends layout
 block content
   h1 Adam Blog
   p Welcome to #{title} Here is where I'm going to put my test posts
-  p testing
+  each posting in post
+    p #{posting.title}
+    p #{posting.topic}
+    p #{posting.post}
+    p #{posting.author}
