@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Adam Blog
+  p Here are a list of all my posts
+  each posting in post
+    h2
+      a(href= '/post/' + posting._id ) #{posting.title}
+    h4 #{posting.topic}
+    h4 #{posting.date}
+
+    p #{posting.post}
+
+    p
+      i #{posting.author}
+    br

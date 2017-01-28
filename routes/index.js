@@ -18,7 +18,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   /* GET home page. */
   router.get('/', function(req, res, next) {
-    Post.find({}).exec(function(err, post) {
+    Post.findOne({}).sort({"date":-1}).exec(function(err, post) {
       if (err) {
         console.log(err)
       } else {
@@ -26,38 +26,6 @@ db.once('open', function() {
       }
     })
   });
-
-  router.get('/post', function(req, res, next) {
-    res.render('post', { title: 'Express' });
-  });
-
-  router.post('/makePost', function(req,res,next) {
-    var title = req.body.title;
-    var topic = req.body.topic;
-    var post = req.body.post;
-    var author = req.body.author;
-    var date = new Date();
-    console.log(title)
-    console.log(topic)
-    console.log(post)
-    console.log(author)
-
-
-      var newPost = new Post({
-      title : title,
-      topic : topic,
-      post: post,
-      author : author,
-      date : date
-    });
-    newPost.save(function(err, post){
-        if(err) throw err;
-        console.log(err);
-        console.log(post);
-      });
-    res.redirect('/')
-
-  })
 });
 
 module.exports = router;
