@@ -7,6 +7,7 @@ var blogSchema = new Schema({
   post:   String,
   author: String,
   comments: [{ body: String,
+               name: String,
                date: Date
              }],
   date: { type: Date, default: Date.now }

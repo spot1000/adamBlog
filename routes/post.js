@@ -61,4 +61,8 @@ router.post('/makePost', function(req, res, next) {
     res.redirect('/post/')
 });
 
+router.post('/addComment', function(req,res,next) {
+  var comment
+})
+
 module.exports = router;
