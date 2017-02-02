@@ -12,9 +12,12 @@ block content
     i #{post.author}
 
   h3 Comments
+    each comment in post.comments
+      p #{post.comments[0].body}
+      p #{post.comments[0].name}
 
-  form(method="post", action='addComment')
-    | comment:
+  form(method="post", action= post.id + '/addComment')
+    | submit a comment:
     br
     textarea(rows="4" cols="50" name="comment")
     br

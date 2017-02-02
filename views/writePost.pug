@@ -9,7 +9,11 @@ block content
     br
     | Topic:
     br
-    input(type='text' name="topic" placeholder="topic")
+    select(name="dropdown")
+      each category in topic
+        option(value=category.topic) #{category.topic}
+    br
+    input(type='text' name="topic" placeholder="or add a new topic")
     br
     | Post:
     br

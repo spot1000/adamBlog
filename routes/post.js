@@ -2,7 +2,8 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var Post = require("../models/posts")
+var Post = require("../models/posts");
+var Topic = require("../models/topics");
 var mongoose = require('mongoose');
 var mongo = require('mongodb');
 
@@ -20,8 +21,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get("/writePost", function(req, res, next) {
-    res.render('writePost', {
-        title: "Write a post"
+    Topic.find({}).exec(function(err, topic) {
+      if (err) {
+          console.log(err)
+      } else {
+        console.log(topic)
+        res.render('writePost', {
+                title: "Write a post",
+                topic : topic
+            });
+        }
     });
 });
 
@@ -30,6 +39,7 @@ router.get('/:ID', function(req, res, next) {
     if (err) {
         console.log(err)
     } else {
+      console.log(post)
         res.render('singlePost', {
             title: 'hi',
             post: post
@@ -40,10 +50,38 @@ router.get('/:ID', function(req, res, next) {
 
 router.post('/makePost', function(req, res, next) {
     var title = req.body.title;
-    var topic = req.body.topic;
+    var topic = req.body.dropdown;
     var post = req.body.post;
     var author = req.body.author;
     var date = new Date();
+    if (req.body.topic) {
+      topic = req.body.topic;
+
+      var newTopic = new Topic({
+        topic : topic
+      });
+
+      var newPost = new Post({
+          title: title,
+          topic: topic,
+          post: post,
+          author: author,
+          date: date
+      });
+
+      newPost.save(function(err, post) {
+          if (err) throw err;
+          console.log(err);
+          console.log(post);
+      });
+
+      newTopic.save(function(err, topic) {
+        if (err) throw err;
+        console.log(err);
+        console.log(topic);
+      });
+    }
+
     var newPost = new Post({
         title: title,
         topic: topic,
@@ -61,8 +99,20 @@ router.post('/makePost', function(req, res, next) {
     res.redirect('/post/')
 });
 
-router.post('/addComment', function(req,res,next) {
-  var comment
-})
+router.post('/:ID/addComment', function(req,res,next) {
+    var body = req.body.comment
+    var name = req.body.name
+    var date = new Date()
+    console.log(body);
+    console.log(name)
+    console.log(date)
+
+  Post.findByIdAndUpdate(req.params.ID, {"$push": {'comments' : {'body' : req.body.comment, 'name': req.body.name, 'date': new Date()}}
+  }, {safe:true, upsert:true, new : true}, function(err, comment) {
+    if (err) throw err;
+    console.log(comment);
+    res.redirect('back')
+  });
+});
 
 module.exports = router;
