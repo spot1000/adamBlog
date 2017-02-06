@@ -18,3 +18,5 @@ block content
   a(href='/post') Posts
   br
   a(href='/post/writePost') Write new post
+  each topic in topics
+    p #{topic.topic}

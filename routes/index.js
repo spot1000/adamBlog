@@ -3,7 +3,8 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var Post = require("../models/posts")
+var Post = require("../models/posts");
+var Topic = require("../models/topics")
 var mongoose = require('mongoose');
 var mongo = require('mongodb');
 
@@ -22,7 +23,9 @@ db.once('open', function() {
       if (err) {
         console.log(err)
       } else {
-          res.render('index', { title: 'Express', post : post });
+        Topic.find({}).sort({"topic":1}).exec(function(err, topics) {
+          res.render('index', { title: 'Express', post : post, topics : topics });
+        });
       }
     })
   });
