@@ -12,9 +12,13 @@ block content
     i #{post.author}
 
   h3 Comments
-    each comment in post.comments
-      p #{post.comments[0].body}
-      p #{post.comments[0].name}
+  br
+  each comment in post.comments
+    p #{comment.body}
+    p #{comment.name}
+
+  br
+  br
 
   form(method="post", action= post.id + '/addComment')
     | submit a comment:
@@ -26,3 +30,7 @@ block content
     input(type="text" name="name" placeholder="author")
     br
     input(type='submit' value='submit' )
+
+  a(href='/post/') Edit
+  br
+  a(href='#') Delete

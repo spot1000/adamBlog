@@ -3,6 +3,7 @@ extends layout
 block content
   h1 Adam Blog
   p Welcome to #{title} Here is where I'm going to put my test posts
+
   h1 #{title}
   h2
     a(href= '/post/' + post._id ) #{post.title}
@@ -18,5 +19,11 @@ block content
   a(href='/post') Posts
   br
   a(href='/post/writePost') Write new post
+  br
+  br
+
+  h3 Search by topic
+
   each topic in topics
-    p #{topic.topic}
+    a(href = '/post/topics/' + topic.topic) #{topic.topic}
+    br

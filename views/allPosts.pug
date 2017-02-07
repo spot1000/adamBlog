@@ -1,8 +1,12 @@
 extends layout
 
 block content
-  h1 All Blog Posts
-  p Here are a list of all my posts
+  if topic
+    h1 All #{topic} Posts
+    p Here are all my posts about #{topic}
+  else
+    h1 All Blog Posts
+    p Here are a list of all my posts
   each posting in post
     h2
       a(href= '/post/' + posting._id ) #{posting.title}
@@ -14,5 +18,3 @@ block content
     p
       i #{posting.author}
     br
-
-    
