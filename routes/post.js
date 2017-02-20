@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
             console.log(err)
         } else {
             res.render('allPosts', {
-                title: 'Express',
+                title: 'Adam Blog',
                 post: post
             });
         }
@@ -44,6 +44,20 @@ router.get('/:ID', function(req, res, next) {
             title: 'hi',
             post: post
         });
+    }
+  });
+});
+
+router.get('/topics/:TOPIC', function(req, res, next) {
+  Post.find({"topic" : req.params.TOPIC}).exec(function(err, post) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(post)
+      res.render('allPosts', {
+        topic: req.params.TOPIC,
+        post : post
+      });
     }
   });
 });
@@ -81,20 +95,21 @@ router.post('/makePost', function(req, res, next) {
         console.log(topic);
       });
     }
+    else {
+      var newPost = new Post({
+          title: title,
+          topic: topic,
+          post: post,
+          author: author,
+          date: date
+      });
 
-    var newPost = new Post({
-        title: title,
-        topic: topic,
-        post: post,
-        author: author,
-        date: date
-    });
-
-    newPost.save(function(err, post) {
-        if (err) throw err;
-        console.log(err);
-        console.log(post);
-    });
+      newPost.save(function(err, post) {
+          if (err) throw err;
+          console.log(err);
+          console.log(post);
+      });
+    }
 
     res.redirect('/post/')
 });
