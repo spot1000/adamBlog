@@ -1,8 +1,26 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
-a {
-  color: #00B7FF;
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+html {
+  box-sizing: border-box;
+}
+body {
+  padding: 20px;
+  font: 100% sans-serif;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  background: #eee;
+  padding: 5px;
+
+}
+.icon {
+  width: 30px;
+  height: 30px;
+  background: #ccc;
+  border-radius: 50%;
 }
